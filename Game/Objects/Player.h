@@ -27,7 +27,8 @@ public:
 private:
 	bool UpSideGround = false;
 	bool DownSideGround = true;
-	bool changeFlag = false;
+public:
+	bool changePlayerFlag = false;
 
 };
 

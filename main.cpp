@@ -44,6 +44,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	int BlockSize = 32;
 	int Scene = TITLE;
+	int Stagecount = 0;
 
 	int map[mapHeight][mapWidth]{
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -54,7 +55,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-	   {0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,2,0,0,1,0,0,0,0,1,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0},
 
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -65,7 +66,38 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 
-	   {0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+	};
+
+	int map2[mapHeight][mapWidth]{
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0},
+
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+
+
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+
+	   {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -130,6 +162,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
+		if (preKeys[DIK_R] == 0 && keys[DIK_R] != 0) {
+			player->BluePlayer.pos.x = { 1 };
+			player->PinkPlayer.pos.x = { 1 };
+			Scene = STAGE1;
+		}
 
 		switch (Scene) {
 		case TITLE: //0
@@ -141,18 +178,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case GAMEOVER: //1
 
-			if (keys[DIK_SPACE]) {
+			if (keys[DIK_SPACE] && Stagecount == 1) {
 				player->BluePlayer.pos.x = { 1 };
 				player->PinkPlayer.pos.x = { 1 };
 				Scene = STAGE1;
+			}
+			if (keys[DIK_SPACE] && Stagecount == 2) {
+				player->BluePlayer.pos.x = { 1 };
+				player->PinkPlayer.pos.x = { 1 };
+				Scene = STAGE2;
+			}
+			if (keys[DIK_SPACE] && Stagecount == 3) {
+				player->BluePlayer.pos.x = { 1 };
+				player->PinkPlayer.pos.x = { 1 };
+				Scene = STAGE3;
+			}
+			if (keys[DIK_SPACE] && Stagecount == 4) {
+				player->BluePlayer.pos.x = { 1 };
+				player->PinkPlayer.pos.x = { 1 };
+				Scene = STAGE4;
 			}
 
 			break;
 		case STAGE1: //2
 
+			Stagecount = 1;
 			player->Update(keys, preKeys);
 
-			if (preKeys[DIK_SPACE] == 0 && keys[DIK_SPACE] != 0 && Scene == STAGE1) {
+			if (preKeys[DIK_SPACE] == 0 && keys[DIK_SPACE] != 0) {
 				changeFlag = true;
 			}
 
@@ -172,41 +225,101 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				//列の繰り返し
 				for (int x = 0; x < mapWidth; x++) {
 					//配列でブロックが存在している場合は配置する
-					if (map[y][x] == BLUEENEMY) {
-						if (UpSideGround == true) {
-
-							if (player->BluePlayer.pos.x * 32 + 32 > x * BlockSize && player->BluePlayer.pos.x * 32 + 32 < x * BlockSize) {
-								Scene = GAMEOVER;
-							}
-						}
+					if (map[y][x] == PINKENEMY) {
 						if (UpSideGround == false) {
-
-							if (player->PinkPlayer.pos.x * 32 + 32 > x * BlockSize && player->PinkPlayer.pos.x * 32 + 32 < x * BlockSize + 32) {
+							if (player->BluePlayer.pos.x * 32 + 32 > x * BlockSize && player->BluePlayer.pos.x * 32 + 32 < x * BlockSize + 32 &&
+								player->BluePlayer.pos.y * 32 + 16 > y * BlockSize && player->BluePlayer.pos.y * 32 + 16 < y * BlockSize + 32) {
 								Scene = GAMEOVER;
 							}
-
+							if (player->BluePlayer.pos.x * 32 > x * BlockSize && player->BluePlayer.pos.x * 32 < x * BlockSize + 32 &&
+								player->BluePlayer.pos.y * 32 + 16 > y * BlockSize && player->BluePlayer.pos.y * 32 + 16 < y * BlockSize + 32) {
+								Scene = GAMEOVER;
+							}
 						}
 					}
-					if (map[y][x] == PINKENEMY) {
-						if (DownSideGround == false) {
-
-							if (player->BluePlayer.pos.x * 32 + 32 > x * BlockSize && player->BluePlayer.pos.x * 32 + 32 < x * BlockSize) {
+					if (map[y][x] == BLUEENEMY) {
+						if (UpSideGround == true) {
+							if (player->PinkPlayer.pos.x * 32 + 32 > x * BlockSize && player->PinkPlayer.pos.x * 32 + 32 < x * BlockSize + 32 &&
+								player->PinkPlayer.pos.y * 32 + 16 > y * BlockSize && player->PinkPlayer.pos.y * 32 + 16 < y * BlockSize + 32) {
 								Scene = GAMEOVER;
 							}
-						}
-						if (DownSideGround == true) {
-
-							if (player->PinkPlayer.pos.x * 32 + 32 > x * BlockSize && player->PinkPlayer.pos.x * 32 + 32 < x * BlockSize + 32) {
+							if (player->PinkPlayer.pos.x * 32 > x * BlockSize && player->PinkPlayer.pos.x * 32 < x * BlockSize + 32 &&
+								player->PinkPlayer.pos.y * 32 + 16 > y * BlockSize && player->PinkPlayer.pos.y * 32 + 16 < y * BlockSize + 32) {
 								Scene = GAMEOVER;
 							}
-
 						}
 					}
 				}
 			}
+			if (player->BluePlayer.pos.x > 40) {
+				UpSideGround = false;
+				DownSideGround = true;
+				changeFlag = false;
+				player->changePlayerFlag = false;
+				player->BluePlayer.pos.x = { 1 };
+				player->PinkPlayer.pos.x = { 1 };
+				player->BluePlayer.pos.y = { 8 };
+				player->PinkPlayer.pos.y = { 15 };
+				Scene = STAGE2;
+			}
 
 			break;
 		case STAGE2: //3
+
+			Stagecount = 2;
+			player->Update(keys, preKeys);
+
+			if (preKeys[DIK_SPACE] == 0 && keys[DIK_SPACE] != 0) {
+				changeFlag = true;
+			}
+
+			if (changeFlag == true) {
+				if (UpSideGround == true) {
+					UpSideGround = false;
+					DownSideGround = true;
+					changeFlag = false;
+				}
+				else if (DownSideGround == true) {
+					UpSideGround = true;
+					DownSideGround = false;
+					changeFlag = false;
+				}
+			}
+			for (int y = 0; y < mapHeight; y++) {
+				//列の繰り返し
+				for (int x = 0; x < mapWidth; x++) {
+					//配列でブロックが存在している場合は配置する
+					if (map2[y][x] == PINKENEMY) {
+						if (UpSideGround == false) {
+							if (player->BluePlayer.pos.x * 32 + 32 > x * BlockSize && player->BluePlayer.pos.x * 32 + 32 < x * BlockSize + 32 &&
+								player->BluePlayer.pos.y * 32 + 16 > y * BlockSize && player->BluePlayer.pos.y * 32 + 16 < y * BlockSize + 32) {
+								Scene = GAMEOVER;
+							}
+							if (player->BluePlayer.pos.x * 32 > x * BlockSize && player->BluePlayer.pos.x * 32 < x * BlockSize + 32 &&
+								player->BluePlayer.pos.y * 32 + 16 > y * BlockSize && player->BluePlayer.pos.y * 32 + 16 < y * BlockSize + 32) {
+								Scene = GAMEOVER;
+							}
+						}
+					}
+					if (map2[y][x] == BLUEENEMY) {
+						if (UpSideGround == true) {
+							if (player->PinkPlayer.pos.x * 32 + 32 > x * BlockSize && player->PinkPlayer.pos.x * 32 + 32 < x * BlockSize + 32 &&
+								player->PinkPlayer.pos.y * 32 + 16 > y * BlockSize && player->PinkPlayer.pos.y * 32 + 16 < y * BlockSize + 32) {
+								Scene = GAMEOVER;
+							}
+							if (player->PinkPlayer.pos.x * 32 > x * BlockSize && player->PinkPlayer.pos.x * 32 < x * BlockSize + 32 &&
+								player->PinkPlayer.pos.y * 32 + 16 > y * BlockSize && player->PinkPlayer.pos.y * 32 + 16 < y * BlockSize + 32) {
+								Scene = GAMEOVER;
+							}
+						}
+					}
+				}
+			}
+			if (player->BluePlayer.pos.x > 40) {
+				player->BluePlayer.pos.x = { 1 };
+				player->PinkPlayer.pos.x = { 1 };
+				Scene = STAGE3;
+			}
 
 			break;
 		case STAGE3: //4
@@ -262,7 +375,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			break;
 		case STAGE2: //3
-
+			if (UpSideGround == true) {
+				Novice::DrawSprite(0, 272, blueground, 1, 1, 0.0f, WHITE);
+				Novice::DrawSprite(0, 384, pinkground1, 1, 1, 0.0f, WHITE);
+			}
+			if (DownSideGround == true) {
+				Novice::DrawSprite(0, 272, pinkground, 1, 1, 0.0f, WHITE);
+				Novice::DrawSprite(0, 384, blueground1, 1, 1, 0.0f, WHITE);
+			}
+			//行の繰り返し
+			for (int y = 0; y < mapHeight; y++) {
+				//列の繰り返し
+				for (int x = 0; x < mapWidth; x++) {
+					//配列でブロックが存在している場合は配置する
+					if (map2[y][x] == BLUEENEMY) {
+						Novice::DrawSpriteRect(x * BlockSize, y * BlockSize, 0, 32, 0, 32, blueEnemy, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
+					}
+					if (map2[y][x] == PINKENEMY) {
+						Novice::DrawSpriteRect(x * BlockSize, y * BlockSize, 0, 32, 0, 32, pinkEnemy, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
+					}
+				}
+			}
+			player->Draw();
 			break;
 		case STAGE3: //4
 
@@ -278,6 +412,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		Novice::ScreenPrintf(100, 100, "Scene = %d", Scene);
 		Novice::ScreenPrintf(100, 120, "UpSide = %d", UpSideGround);
 		Novice::ScreenPrintf(100, 140, "DownSide = %d", DownSideGround);
+		Novice::ScreenPrintf(100, 160, "ChangeFlag = %d", changeFlag);
+		Novice::ScreenPrintf(100, 180, "ChangePlayerFlag = %d", player->changePlayerFlag);
 
 		///
 		/// ↑描画処理ここまで
