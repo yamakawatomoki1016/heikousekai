@@ -7,7 +7,9 @@ enum MapInfo {
 	NONE,      // 0
 	BLUEENEMY, // 1
 	PINKENEMY, // 2
-	PORTAL     // 3
+	PORTAL,    // 3
+	PINKDAMAGE,// 4
+	BLUEDAMAGE // 5
 };
 
 enum SCENE {
@@ -86,7 +88,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-	   {0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,4,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
 
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -97,7 +99,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 
-	   {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,5,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -116,6 +118,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int pinkground1 = Novice::LoadTexture("./Resources/pinkground1.png");//反転バージョン
 	int blueground = Novice::LoadTexture("./Resources/blueground.png");
 	int blueground1 = Novice::LoadTexture("./Resources/blueground1.png");//反転バージョン
+	int pinkDamage = Novice::LoadTexture("./Resources/pinkDamage.png");//ピンクのダメージ床
+	int blueDamage = Novice::LoadTexture("./Resources/blueDamage.png");//青のダメージ床
 
 	//ブロックの状況
 	for (int y = 0; y < mapHeight; y++) {
@@ -165,7 +169,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		if (preKeys[DIK_R] == 0 && keys[DIK_R] != 0) {
 			player->BluePlayer.pos.x = { 1 };
 			player->PinkPlayer.pos.x = { 1 };
-			Scene = STAGE1;
+			Scene = Stagecount;
 		}
 
 		switch (Scene) {
@@ -205,10 +209,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			Stagecount = 1;
 			player->Update(keys, preKeys);
 
+			//地面を入れ替える
 			if (preKeys[DIK_SPACE] == 0 && keys[DIK_SPACE] != 0) {
 				changeFlag = true;
 			}
-
 			if (changeFlag == true) {
 				if (UpSideGround == true) {
 					UpSideGround = false;
@@ -221,10 +225,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					changeFlag = false;
 				}
 			}
+			//ピンクの敵との当たり判定
 			for (int y = 0; y < mapHeight; y++) {
-				//列の繰り返し
 				for (int x = 0; x < mapWidth; x++) {
-					//配列でブロックが存在している場合は配置する
 					if (map[y][x] == PINKENEMY) {
 						if (UpSideGround == false) {
 							if (player->BluePlayer.pos.x * 32 + 32 > x * BlockSize && player->BluePlayer.pos.x * 32 + 32 < x * BlockSize + 32 &&
@@ -237,6 +240,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 							}
 						}
 					}
+					//青の敵との当たり判定
 					if (map[y][x] == BLUEENEMY) {
 						if (UpSideGround == true) {
 							if (player->PinkPlayer.pos.x * 32 + 32 > x * BlockSize && player->PinkPlayer.pos.x * 32 + 32 < x * BlockSize + 32 &&
@@ -251,6 +255,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					}
 				}
 			}
+			//シーン移行
 			if (player->BluePlayer.pos.x > 40) {
 				UpSideGround = false;
 				DownSideGround = true;
@@ -269,10 +274,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			Stagecount = 2;
 			player->Update(keys, preKeys);
 
+			//地面を入れ替える
 			if (preKeys[DIK_SPACE] == 0 && keys[DIK_SPACE] != 0) {
 				changeFlag = true;
 			}
-
 			if (changeFlag == true) {
 				if (UpSideGround == true) {
 					UpSideGround = false;
@@ -285,10 +290,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					changeFlag = false;
 				}
 			}
+			//ピンクの敵との当たり判定
 			for (int y = 0; y < mapHeight; y++) {
-				//列の繰り返し
 				for (int x = 0; x < mapWidth; x++) {
-					//配列でブロックが存在している場合は配置する
 					if (map2[y][x] == PINKENEMY) {
 						if (UpSideGround == false) {
 							if (player->BluePlayer.pos.x * 32 + 32 > x * BlockSize && player->BluePlayer.pos.x * 32 + 32 < x * BlockSize + 32 &&
@@ -301,6 +305,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 							}
 						}
 					}
+					//青の敵との当たり判定
 					if (map2[y][x] == BLUEENEMY) {
 						if (UpSideGround == true) {
 							if (player->PinkPlayer.pos.x * 32 + 32 > x * BlockSize && player->PinkPlayer.pos.x * 32 + 32 < x * BlockSize + 32 &&
@@ -315,6 +320,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					}
 				}
 			}
+			//シーン移行
 			if (player->BluePlayer.pos.x > 40) {
 				player->BluePlayer.pos.x = { 1 };
 				player->PinkPlayer.pos.x = { 1 };
@@ -358,11 +364,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				Novice::DrawSprite(0, 272, pinkground, 1, 1, 0.0f, WHITE);
 				Novice::DrawSprite(0, 384, blueground1, 1, 1, 0.0f, WHITE);
 			}
-			//行の繰り返し
 			for (int y = 0; y < mapHeight; y++) {
-				//列の繰り返し
 				for (int x = 0; x < mapWidth; x++) {
-					//配列でブロックが存在している場合は配置する
 					if (map[y][x] == BLUEENEMY) {
 						Novice::DrawSpriteRect(x * BlockSize, y * BlockSize, 0, 32, 0, 32, blueEnemy, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
 					}
@@ -383,16 +386,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				Novice::DrawSprite(0, 272, pinkground, 1, 1, 0.0f, WHITE);
 				Novice::DrawSprite(0, 384, blueground1, 1, 1, 0.0f, WHITE);
 			}
-			//行の繰り返し
 			for (int y = 0; y < mapHeight; y++) {
-				//列の繰り返し
 				for (int x = 0; x < mapWidth; x++) {
-					//配列でブロックが存在している場合は配置する
 					if (map2[y][x] == BLUEENEMY) {
 						Novice::DrawSpriteRect(x * BlockSize, y * BlockSize, 0, 32, 0, 32, blueEnemy, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
 					}
 					if (map2[y][x] == PINKENEMY) {
 						Novice::DrawSpriteRect(x * BlockSize, y * BlockSize, 0, 32, 0, 32, pinkEnemy, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
+					}
+				}
+			}
+			for (int y = 0; y < mapHeight; y++) {
+				for (int x = 0; x < mapWidth; x++) {
+					if (map2[y][x] == PINKDAMAGE) {
+						Novice::DrawSpriteRect(x * BlockSize, y * BlockSize + 16, 0, 32, 0, 32, pinkDamage, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
+					}
+					if (map2[y][x] == BLUEDAMAGE) {
+						Novice::DrawSpriteRect(x * BlockSize, y * BlockSize - 16, 0, 32, 0, 32, blueDamage, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
 					}
 				}
 			}
