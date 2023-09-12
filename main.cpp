@@ -27,6 +27,12 @@ struct Block {
 	Vector2 imagePos; //読み込む画像の座標
 };
 
+struct CharaEnemy {
+	Vector2 pos;
+	int radius;
+	unsigned int color;
+};
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
@@ -169,6 +175,55 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 		}
 	}
+
+	CharaEnemy blueEnemy1 = {
+		{10,15},
+		32,
+		0xFFFFFFFF,
+	};
+
+	CharaEnemy pinkEnemy1 = {
+		{10,8},
+		32,
+		0xFFFFFFFF,
+	};
+
+	CharaEnemy blueEnemy2 = {
+		{16,8},
+		32,
+		0xFFFFFFFF,
+	};
+
+	CharaEnemy pinkEnemy2 = {
+		{16,15},
+		32,
+		0xFFFFFFFF,
+	};
+
+	CharaEnemy blueEnemy3 = {
+		{22,15},
+		32,
+		0xFFFFFFFF,
+	};
+
+	CharaEnemy pinkEnemy3 = {
+		{22,8},
+		32,
+		0xFFFFFFFF,
+	};
+
+	CharaEnemy blueEnemy4 = {
+		{28,8},
+		32,
+		0xFFFFFFFF,
+	};
+
+	CharaEnemy pinkEnemy4 = {
+		{28,15},
+		32,
+		0xFFFFFFFF,
+	};
+
 	bool UpSideGround = false;
 	bool DownSideGround = true;
 	bool changeFlag = false;
@@ -294,6 +349,24 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			if (player->BluePlayer.pos.x > 40) {
 				player->BluePlayer.pos.x = { 1 };
 				player->PinkPlayer.pos.x = { 1 };
+
+				blueEnemy1.pos.x = { 470 };
+				blueEnemy1.pos.y = { 480 };
+				pinkEnemy1.pos.x = { 470 };
+				pinkEnemy1.pos.y = { 256 };
+				blueEnemy2.pos.x = { 662 };
+				blueEnemy2.pos.y = { 256 };
+				pinkEnemy2.pos.x = { 662 };
+				pinkEnemy2.pos.y = { 480 };
+				blueEnemy3.pos.x = { 854 };
+				blueEnemy3.pos.y = { 480 };
+				pinkEnemy3.pos.x = { 854 };
+				pinkEnemy3.pos.y = { 256 };
+				blueEnemy4.pos.x = { 1046 };
+				blueEnemy4.pos.y = { 256 };
+				pinkEnemy4.pos.x = { 1046 };
+				pinkEnemy4.pos.y = { 480 };
+
 				stageClear = 1;
 			}
 			break;
@@ -307,6 +380,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			
 			if (Color == 0x00000000) {
 				player->Update();
+
+				blueEnemy1.pos.x--;
+				blueEnemy2.pos.x--;
+				blueEnemy3.pos.x--;
+				blueEnemy4.pos.x--;
+
+				pinkEnemy1.pos.x--;
+				pinkEnemy2.pos.x--;
+				pinkEnemy3.pos.x--;
+				pinkEnemy4.pos.x--;
 
 				//地面を入れ替える
 				if (Novice::IsTriggerButton(0, kPadButton10)) {
@@ -325,36 +408,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					}
 				}
 
-				//ピンクの敵との当たり判定
-				for (int y = 0; y < mapHeight; y++) {
-					for (int x = 0; x < mapWidth; x++) {
-						if (map2[y][x] == PINKENEMY) {
-							if (UpSideGround == false) {
-								if (player->BluePlayer.pos.x * 32 + 32 > x * BlockSize && player->BluePlayer.pos.x * 32 + 32 < x * BlockSize + 32 &&
-									player->BluePlayer.pos.y * 32 + 16 > y * BlockSize && player->BluePlayer.pos.y * 32 + 16 < y * BlockSize + 32) {
-									Scene = GAMEOVER;
-								}
-								if (player->BluePlayer.pos.x * 32 > x * BlockSize && player->BluePlayer.pos.x * 32 < x * BlockSize + 32 &&
-									player->BluePlayer.pos.y * 32 + 16 > y * BlockSize && player->BluePlayer.pos.y * 32 + 16 < y * BlockSize + 32) {
-									Scene = GAMEOVER;
-								}
-							}
-						}
-						//青の敵との当たり判定
-						if (map2[y][x] == BLUEENEMY) {
-							if (UpSideGround == true) {
-								if (player->PinkPlayer.pos.x * 32 + 32 > x * BlockSize && player->PinkPlayer.pos.x * 32 + 32 < x * BlockSize + 32 &&
-									player->PinkPlayer.pos.y * 32 + 16 > y * BlockSize && player->PinkPlayer.pos.y * 32 + 16 < y * BlockSize + 32) {
-									Scene = GAMEOVER;
-								}
-								if (player->PinkPlayer.pos.x * 32 > x * BlockSize && player->PinkPlayer.pos.x * 32 < x * BlockSize + 32 &&
-									player->PinkPlayer.pos.y * 32 + 16 > y * BlockSize && player->PinkPlayer.pos.y * 32 + 16 < y * BlockSize + 32) {
-									Scene = GAMEOVER;
-								}
-							}
-						}
-					}
-				}
+				//当たり判定
 
 				//シーン移行
 				if (player->BluePlayer.pos.x > 40) {
@@ -479,6 +533,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					}
 				}
 			}
+
+			Novice::DrawSprite(int(blueEnemy1.pos.x), int(blueEnemy1.pos.y), blueEnemyUp1, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
+			Novice::DrawSprite(int(blueEnemy2.pos.x), int(blueEnemy2.pos.y), blueEnemyUp1, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
+			Novice::DrawSprite(int(blueEnemy3.pos.x), int(blueEnemy3.pos.y), blueEnemyUp1, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
+			Novice::DrawSprite(int(blueEnemy4.pos.x), int(blueEnemy4.pos.y), blueEnemyUp1, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
+			Novice::DrawSprite(int(pinkEnemy1.pos.x), int(pinkEnemy1.pos.y), blueEnemyUp1, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
+			Novice::DrawSprite(int(pinkEnemy2.pos.x), int(pinkEnemy2.pos.y), blueEnemyUp1, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
+			Novice::DrawSprite(int(pinkEnemy3.pos.x), int(pinkEnemy3.pos.y), blueEnemyUp1, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
+			Novice::DrawSprite(int(pinkEnemy4.pos.x), int(pinkEnemy4.pos.y), blueEnemyUp1, 1.0, 1.0, 0.0f, 0xFFFFFFFF);
+
 			player->Draw();
 			break;
 		case STAGE3: //4
