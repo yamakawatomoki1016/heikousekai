@@ -46,7 +46,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int Scene = TITLE;
 	int Stagecount = 0;
 
-	bool StageClear = 0;
+	bool stageClear = 0;
 
 	unsigned int Color = 0x00000000;
 
@@ -114,10 +114,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Block block[mapHeight][mapWidth]{};
 
-	int pinkground = Novice::LoadTexture("./Resources/pinkground.png");
-	int pinkground1 = Novice::LoadTexture("./Resources/pinkground1.png");//反転バージョン
-	int blueground = Novice::LoadTexture("./Resources/blueground.png");
-	int blueground1 = Novice::LoadTexture("./Resources/blueground1.png");//反転バージョン
+	int bluegroundUp = Novice::LoadTexture("./Resources/bluegroundUp.png");//上が青の地面
+	int pinkgroundUp = Novice::LoadTexture("./Resources/pinkgroundUp.png");//上がピンクの地面
 	int blueEnemyUp1 = Novice::LoadTexture("./Resources/blueEnemyUp1.png");//青の敵1枚目
 	int blueEnemyUp2 = Novice::LoadTexture("./Resources/blueEnemyUp2.png");//青の敵2枚目
 	int blueEnemyUp3 = Novice::LoadTexture("./Resources/blueEnemyUp3.png");//青の敵3枚目
@@ -138,6 +136,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int pinkHaikeiUp = Novice::LoadTexture("./Resources/pinkHaikeiUp.png");//ピンクの背景上
 	int kurisutaruUp = Novice::LoadTexture("./Resources/kurisutaruUp.png");//クリスタル上
 	int kurisutaruDown = Novice::LoadTexture("./Resources/kurisutaruDown.png");//クリスタル下
+	int title = Novice::LoadTexture("./Resources/title.png");
 
 	//ブロックの状況
 	for (int y = 0; y < mapHeight; y++) {
@@ -223,14 +222,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				Scene = STAGE4;
 			}
 
+
 			break;
 		case STAGE1: //2
+			Stagecount = 1;
 
 			EnemyTime++;
 			if (EnemyTime >= 81) {
 				EnemyTime = 0;
 			}
-			Stagecount = 1;
+
 			player->Update();
 
 			//地面を入れ替える
@@ -249,6 +250,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					changeFlag = false;
 				}
 			}
+
 			//ピンクの敵との当たり判定
 			for (int y = 0; y < mapHeight; y++) {
 				for (int x = 0; x < mapWidth; x++) {
@@ -280,32 +282,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				}
 			}
 
-			if (StageClear == 1) {
+			if (stageClear == 1) {
 				Color = 0x000000FF;
 			}
 
 			if (Color == 0x000000FF) {
 				Scene = STAGE2;
-				StageClear = 0;
+				stageClear = 0;
 			}
 			//シーン移行
 			if (player->BluePlayer.pos.x > 40) {
 				player->BluePlayer.pos.x = { 1 };
 				player->PinkPlayer.pos.x = { 1 };
-				StageClear = 1;
+				stageClear = 1;
 			}
-
 			break;
 		case STAGE2: //3
-
-			if (!StageClear) {
+			Stagecount = 2;
+			if (!stageClear) {
 				if (Color != 0x00000000) {
 					Color -= 0x00000003;
 				}
 			}
-
+			
 			if (Color == 0x00000000) {
-				Stagecount = 2;
 				player->Update();
 
 				//地面を入れ替える
@@ -324,6 +324,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 						changeFlag = false;
 					}
 				}
+
 				//ピンクの敵との当たり判定
 				for (int y = 0; y < mapHeight; y++) {
 					for (int x = 0; x < mapWidth; x++) {
@@ -354,6 +355,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 						}
 					}
 				}
+
 				//シーン移行
 				if (player->BluePlayer.pos.x > 40) {
 					player->BluePlayer.pos.x = { 1 };
@@ -383,6 +385,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (Scene)
 		{
 		case TITLE:
+			Novice::DrawSprite(0, 0, title, 1, 1, 0.0f, WHITE);
 			break;
 
 		case GAMEOVER: //1
@@ -391,43 +394,41 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		case STAGE1: //2
 
 			if (UpSideGround == true) {
-				Novice::DrawSprite(0, 0, pinkHaikeiUp,1,1,0.0f,WHITE);
+				Novice::DrawSprite(0, 0, pinkHaikeiUp, 1, 1, 0.0f, WHITE);
 				Novice::DrawSprite(0, 0, kurisutaruDown, 1, 1, 0.0f, WHITE);
-				Novice::DrawSprite(0, 272, blueground, 1, 1, 0.0f, WHITE);
-				Novice::DrawSprite(0, 384, pinkground1, 1, 1, 0.0f, WHITE);
+				Novice::DrawSprite(0, 272, bluegroundUp, 1, 1, 0.0f, WHITE);
 			}
 			if (DownSideGround == true) {
 				Novice::DrawSprite(0, 0, blueHaikeiUp, 1, 1, 0.0f, WHITE);
 				Novice::DrawSprite(0, 0, kurisutaruUp, 1, 1, 0.0f, WHITE);
-				Novice::DrawSprite(0, 272, pinkground, 1, 1, 0.0f, WHITE);
-				Novice::DrawSprite(0, 384, blueground1, 1, 1, 0.0f, WHITE);
+				Novice::DrawSprite(0, 272, pinkgroundUp, 1, 1, 0.0f, WHITE);
 			}
 			for (int y = 0; y < mapHeight; y++) {
 				for (int x = 0; x < mapWidth; x++) {
 					if (map[y][x] == BLUEENEMY) {
 						if (EnemyTime >= 1 && EnemyTime <= 10) {
-							Novice::DrawSprite(x* BlockSize, y* BlockSize, blueEnemyUp1, 1, 1, 0.0f, WHITE);
+							Novice::DrawSprite(x * BlockSize, y * BlockSize, blueEnemyUp1, 1, 1, 0.0f, WHITE);
 						}
 						if (EnemyTime >= 11 && EnemyTime <= 20) {
-							Novice::DrawSprite(x* BlockSize, y* BlockSize, blueEnemyUp2, 1, 1, 0.0f, WHITE);
+							Novice::DrawSprite(x * BlockSize, y * BlockSize, blueEnemyUp2, 1, 1, 0.0f, WHITE);
 						}
 						if (EnemyTime >= 21 && EnemyTime <= 30) {
-							Novice::DrawSprite(x* BlockSize, y* BlockSize, blueEnemyUp3, 1, 1, 0.0f, WHITE);
+							Novice::DrawSprite(x * BlockSize, y * BlockSize, blueEnemyUp3, 1, 1, 0.0f, WHITE);
 						}
 						if (EnemyTime >= 31 && EnemyTime <= 40) {
-							Novice::DrawSprite(x* BlockSize, y* BlockSize, blueEnemyUp4, 1, 1, 0.0f, WHITE);
+							Novice::DrawSprite(x * BlockSize, y * BlockSize, blueEnemyUp4, 1, 1, 0.0f, WHITE);
 						}
 						if (EnemyTime >= 41 && EnemyTime <= 50) {
-							Novice::DrawSprite(x* BlockSize, y* BlockSize, blueEnemyUp5678910, 1, 1, 0.0f, WHITE);
+							Novice::DrawSprite(x * BlockSize, y * BlockSize, blueEnemyUp5678910, 1, 1, 0.0f, WHITE);
 						}
 						if (EnemyTime >= 51 && EnemyTime <= 60) {
-							Novice::DrawSprite(x* BlockSize, y* BlockSize, blueEnemyUp11, 1, 1, 0.0f, WHITE);
+							Novice::DrawSprite(x * BlockSize, y * BlockSize, blueEnemyUp11, 1, 1, 0.0f, WHITE);
 						}
 						if (EnemyTime >= 61 && EnemyTime <= 70) {
-							Novice::DrawSprite(x* BlockSize, y* BlockSize, blueEnemyUp12, 1, 1, 0.0f, WHITE);
+							Novice::DrawSprite(x * BlockSize, y * BlockSize, blueEnemyUp12, 1, 1, 0.0f, WHITE);
 						}
 						if (EnemyTime >= 71 && EnemyTime <= 80) {
-							Novice::DrawSprite(x* BlockSize, y* BlockSize, blueEnemyUp13, 1, 1, 0.0f, WHITE);
+							Novice::DrawSprite(x * BlockSize, y * BlockSize, blueEnemyUp13, 1, 1, 0.0f, WHITE);
 						}
 					}
 					if (map[y][x] == PINKENEMY) {
@@ -463,12 +464,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case STAGE2: //3
 			if (UpSideGround == false) {
-				Novice::DrawSprite(0, 272, pinkground, 1, 1, 0.0f, WHITE);
-				Novice::DrawSprite(0, 384, blueground1, 1, 1, 0.0f, WHITE);
+				Novice::DrawSprite(0, 272, pinkgroundUp, 1, 1, 0.0f, WHITE);
 			}
 			if (DownSideGround == false) {
-				Novice::DrawSprite(0, 272, blueground, 1, 1, 0.0f, WHITE);
-				Novice::DrawSprite(0, 384, pinkground1, 1, 1, 0.0f, WHITE);
+				Novice::DrawSprite(0, 272, bluegroundUp, 1, 1, 0.0f, WHITE);
 			}
 			for (int y = 0; y < mapHeight; y++) {
 				for (int x = 0; x < mapWidth; x++) {
@@ -493,13 +492,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		}
 
-		Novice::DrawBox(0, 0, 1280, 752, 0.0f, Color, kFillModeSolid);
+		Novice::DrawBox(0, 0, 1280, 752, 0.0f, 0x00000000 + Color, kFillModeSolid);
 
 		Novice::ScreenPrintf(100, 100, "Scene = %d", Scene);
 		Novice::ScreenPrintf(100, 120, "UpSide = %d", UpSideGround);
 		Novice::ScreenPrintf(100, 140, "DownSide = %d", DownSideGround);
 		Novice::ScreenPrintf(100, 160, "ChangeFlag = %d", changeFlag);
 		Novice::ScreenPrintf(100, 180, "ChangePlayerFlag = %d", player->changePlayerFlag);
+		Novice::ScreenPrintf(100, 200, "stageCount = %d", Stagecount);
 
 		///
 		/// ↑描画処理ここまで
