@@ -6,12 +6,12 @@ void Player::Initialize()
 {
 }
 
-void Player::Update(char* keys, char* preKeys)
+void Player::Update()
 {
 	BluePlayer.pos.x += 0.06f;
 	PinkPlayer.pos.x += 0.06f;
 
-	if (preKeys[DIK_SPACE] == 0 && keys[DIK_SPACE] != 0) {
+	if (Novice::IsTriggerButton(0, kPadButton10)) {
 		changePlayerFlag = true;
 	}
 

@@ -10,7 +10,7 @@ class Player
 {
 public:
 	void Initialize();
-	void Update(char* keys, char* preKeys);
+	void Update();
 	void Draw();
 public:
 	Chara BluePlayer = {
