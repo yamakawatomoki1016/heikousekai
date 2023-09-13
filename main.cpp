@@ -219,147 +219,147 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//STAGE2
 	CharaEnemy blueEnemy1 = {
-		{12,15},
+		{12.0f,15.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy pinkEnemy1 = {
-		{12,8},
+		{12.0f,8.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy blueEnemy2 = {
-		{18,8},
+		{18.0f,8.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy pinkEnemy2 = {
-		{18,15},
+		{18.0f,15.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy blueEnemy3 = {
-		{24,15},
+		{240.f,15.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy pinkEnemy3 = {
-		{24,8},
+		{24.0f,8.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy blueEnemy4 = {
-		{30,8},
+		{30.0f,8.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy pinkEnemy4 = {
-		{30,15},
+		{30.0f,15.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	//STAGE3
 	CharaEnemy blueEnemy5 = {
-		{12,15},
+		{12.0f,15.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy pinkEnemy5 = {
-		{12,8},
+		{12.0f,8.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy blueEnemy6 = {
-		{18,8},
+		{18.0f,8.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy pinkEnemy6 = {
-		{18,15},
+		{18.0f,15.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy blueEnemy7 = {
-		{24,15},
+		{24.0f,15.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy pinkEnemy7 = {
-		{24,8},
+		{24.0f,8.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy blueEnemy8 = {
-		{30,8},
+		{30.0f,8.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy pinkEnemy8 = {
-		{30,15},
+		{30.0f,15.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	//STAGE4
 	CharaEnemy blueEnemy9 = {
-		{12,15},
+		{12.0f,15.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy pinkEnemy9 = {
-		{12,8},
+		{12.0f,8.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy blueEnemy10 = {
-		{18,8},
+		{18.0f,8.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy pinkEnemy10 = {
-		{18,15},
+		{18.0f,15.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy blueEnemy11 = {
-		{24,15},
+		{24.0f,15.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy pinkEnemy11 = {
-		{24,8},
+		{24.0f,8.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy blueEnemy12 = {
-		{30,8},
+		{30.0f,8.0f},
 		32,
 		0xFFFFFFFF,
 	};
 
 	CharaEnemy pinkEnemy12 = {
-		{30,15},
+		{30.0f,15.0f},
 		32,
 		0xFFFFFFFF,
 	};
@@ -472,7 +472,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		switch (Scene) {
 		case TITLE: //0
-
+			Color = 0;
+			stageClear = 0;
 			if (Novice::IsTriggerButton(0, kPadButton10)) {
 				Scene = STAGE1;
 			}
@@ -855,8 +856,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//敵との当たり判定
 			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 4; j++) {
-					if (player->BluePlayer.pos.x * 32 + 32 > pinkEnemyX[i] && player->BluePlayer.pos.x * 32 + 32 < pinkEnemyX[i] + 32 &&
-						player->BluePlayer.pos.y * 32 + 16 > pinkEnemyY[i] && player->BluePlayer.pos.y * 32 + 16 < pinkEnemyY[i] + 32) {
+					if (player->BluePlayer.pos.x * 32.0f + 32.0f > pinkEnemyX[i] && player->BluePlayer.pos.x * 32.0f + 32.0f < pinkEnemyX[i] + 32 &&
+						player->BluePlayer.pos.y * 32.0f + 16.0f > pinkEnemyY[i] && player->BluePlayer.pos.y * 32.0f + 16.0f < pinkEnemyY[i] + 32) {
 						Blackinflag = 1;
 						Scene = GAMEOVER;
 					}
@@ -870,11 +871,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			
 			break;
 		case CLEAR: //6
-			Stagecount = 5;
+			Stagecount = 0;
 			if (Novice::IsTriggerButton(0, kPadButton10)) {
 				enemyMoveTime = 0;
 				gameOverColor = 255;
-
 
 
 				player->BluePlayer.pos.x = { 1 };

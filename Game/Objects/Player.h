@@ -13,13 +13,13 @@ public:
 	void Update();
 public:
 	Chara BluePlayer = {
-		{1,8},
+		{1.0f,8.0f},
 		32,
 		0x00ffffff,
 	};
 
 	Chara PinkPlayer = {
-		{1,15},
+		{1.0f,15.0f},
 		32,
 		0xff66ffff,
 	};
