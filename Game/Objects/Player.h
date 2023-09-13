@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <Vector2.h>
 struct Chara {
 	Vector2 pos;
@@ -11,7 +11,6 @@ class Player
 public:
 	void Initialize();
 	void Update();
-	void Draw();
 public:
 	Chara BluePlayer = {
 		{1,8},
@@ -24,11 +23,10 @@ public:
 		32,
 		0xff66ffff,
 	};
-private:
-	bool UpSideGround = false;
-	bool DownSideGround = true;
+
 public:
 	bool changePlayerFlag = false;
-
+	bool playerUpSideGround = false;
+	bool playerDownSideGround = true;
 };
 

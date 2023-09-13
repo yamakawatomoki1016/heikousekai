@@ -1,4 +1,4 @@
-#include "Player.h"
+﻿#include "Player.h"
 #include <Novice.h>
 
 
@@ -16,54 +16,24 @@ void Player::Update()
 	}
 
 	if (changePlayerFlag == true) {
-		if (UpSideGround == true) {
-			UpSideGround = false;
-			DownSideGround = true;
+		if (playerUpSideGround == true) {
+			playerUpSideGround = false;
+			playerDownSideGround = true;
 			changePlayerFlag = false;
 		}
-		else if (DownSideGround == true) {
-			UpSideGround = true;
-			DownSideGround = false;
+		else if (playerDownSideGround == true) {
+			playerUpSideGround = true;
+			playerDownSideGround = false;
 			changePlayerFlag = false;
 		}
 	}
-	if (UpSideGround == true) {
+	if (playerUpSideGround == true) {
 		BluePlayer.pos.y = 15;
 		PinkPlayer.pos.y = 8;
 	}
-	if (UpSideGround == false) {
+	if (playerUpSideGround == false) {
 		PinkPlayer.pos.y = 15;
 		BluePlayer.pos.y = 8;
 	}
 
-}
-
-void Player::Draw()
-{
-	if (UpSideGround == true) {
-		Novice::DrawBox(
-			static_cast<int>(BluePlayer.pos.x * 32.0f), 
-			static_cast<int>(BluePlayer.pos.y * 32.0f), 
-			static_cast<int>(BluePlayer.radius), 
-			static_cast<int>(BluePlayer.radius), 0.0f, BluePlayer.color, kFillModeSolid);
-
-		Novice::DrawBox(
-			static_cast<int>(PinkPlayer.pos.x * 32.0f), 
-			static_cast<int>(PinkPlayer.pos.y * 32.0f), 
-			static_cast<int>(PinkPlayer.radius), 
-			static_cast<int>(PinkPlayer.radius), 0.0f, PinkPlayer.color, kFillModeSolid);
-	}
-	if (DownSideGround == true) {
-		Novice::DrawBox(
-			static_cast<int>(BluePlayer.pos.x * 32.0f), 
-			static_cast<int>(BluePlayer.pos.y * 32.0f), 
-			static_cast<int>(BluePlayer.radius), 
-			static_cast<int>(BluePlayer.radius), 0.0f, BluePlayer.color, kFillModeSolid);
-
-		Novice::DrawBox(
-			static_cast<int>(PinkPlayer.pos.x * 32.0f),
-			static_cast<int>(PinkPlayer.pos.y * 32.0f), 
-			static_cast<int>(PinkPlayer.radius), 
-			static_cast<int>(PinkPlayer.radius), 0.0f, PinkPlayer.color, kFillModeSolid);
-	}
 }
